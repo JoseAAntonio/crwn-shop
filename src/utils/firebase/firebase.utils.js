@@ -5,6 +5,7 @@ import {
 	signInWithPopup,
 	GoogleAuthProvider,
 } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyBOTtqdPvjS6mFomUSw59FEISBQdR9EhW0",
@@ -26,3 +27,40 @@ provider.setCustomParameters({
 
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+
+//NOTE - points to our database inside the firestore console
+export const db = getFirestore();
+
+export const createUserDocFromAuth = async (userAuth) => {
+	//NOTE - give me the document REFERENCE (doc) inside this db,under the 'users' collection with this uid - it creates a object reference that still doenst exist in the db
+	const userDocRef = doc(db, "users", userAuth.uid);
+	console.log(userDocRef);
+
+	//NOTE - allow us to check if a instance of that user existis in the db and also allows us to access the data (getDoc)
+	const userSnapshot = await getDoc(userDocRef);
+	console.log(userSnapshot.exists());
+
+	if (!userSnapshot.exists()) {
+		const { displayName, email } = userAuth;
+		const createdAt = new Date();
+
+		try {
+			await setDoc(userDocRef, {
+				displayName,
+				email,
+				createdAt,
+			});
+		} catch (error) {
+			console.log("error creating the use", error.message);
+		}
+	}
+
+	return userDocRef;
+};
+
+//NOTE
+//if user data does not exists
+//create/set the document with the data from userAuth in my collection
+
+//if user data exists
+//return userDocRef
