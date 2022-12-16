@@ -1,10 +1,6 @@
 import { initializeApp } from "firebase/app";
-import {
-	getAuth,
-	signInWithRedirect,
-	signInWithPopup,
-	GoogleAuthProvider,
-} from "firebase/auth";
+//NOTE - here we usin the Google authenticator provider...theres more like facebook,github etc
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -19,14 +15,16 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
+const Googleprovider = new GoogleAuthProvider();
 
-provider.setCustomParameters({
+Googleprovider.setCustomParameters({
 	prompt: "select_account",
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+
+export const signInWithGooglePopup = () =>
+	signInWithPopup(auth, Googleprovider);
 
 //NOTE - points to our database inside the firestore console
 export const db = getFirestore();
