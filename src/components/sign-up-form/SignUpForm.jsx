@@ -2,7 +2,7 @@ import { useState } from "react";
 
 //NOTE - initialized value for this 4 values
 const defaultFormFields = {
-	displayNmae: "",
+	displayName: "",
 	email: "",
 	password: "",
 	confirmPassword: "",
@@ -32,7 +32,7 @@ export const SignUpForm = () => {
 					type="text"
 					required
 					onChange={handleChange}
-					name="displayNmae"
+					name="displayName"
 					value={displayName}
 				/>
 

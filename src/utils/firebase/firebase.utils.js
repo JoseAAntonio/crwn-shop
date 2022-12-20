@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 //NOTE - here we usin the Google authenticator provider...theres more like facebook,github etc
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -62,3 +62,4 @@ export const createUserDocFromAuth = async (userAuth) => {
 
 //if user data exists
 //return userDocRef
+
