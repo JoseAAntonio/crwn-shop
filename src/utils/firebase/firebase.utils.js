@@ -1,6 +1,11 @@
 import { initializeApp } from "firebase/app";
-//NOTE - here we usin the Google authenticator provider...theres more like facebook,github etc
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
+//here we usin the Google authenticator provider...theres more like facebook,github etc
+import {
+	getAuth,
+	signInWithPopup,
+	GoogleAuthProvider,
+	createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -26,15 +31,16 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () =>
 	signInWithPopup(auth, Googleprovider);
 
-//NOTE - points to our database inside the firestore console
+//points to our database inside the firestore console
 export const db = getFirestore();
 
 export const createUserDocFromAuth = async (userAuth) => {
-	//NOTE - give me the document REFERENCE (doc) inside this db,under the 'users' collection with this uid - it creates a object reference that still doenst exist in the db
+	if (!userAuth) return;
+	//give me the document REFERENCE "doc" inside this db,under the 'users' collection with this uid - it creates a object reference that still doenst exist in the db
 	const userDocRef = doc(db, "users", userAuth.uid);
 	console.log(userDocRef);
 
-	//NOTE - allow us to check if a instance of that user existis in the db and also allows us to access the data (getDoc)
+	//allow us to check if a instance of that user existis in the db and also allows us to access the data "getDoc"
 	const userSnapshot = await getDoc(userDocRef);
 	console.log(userSnapshot.exists());
 
@@ -56,10 +62,14 @@ export const createUserDocFromAuth = async (userAuth) => {
 	return userDocRef;
 };
 
-//NOTE
 //if user data does not exists
 //create/set the document with the data from userAuth in my collection
 
 //if user data exists
 //return userDocRef
 
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+	if (!email || !password) return;
+
+	createUserWithEmailAndPassword(auth, email, password);
+};
