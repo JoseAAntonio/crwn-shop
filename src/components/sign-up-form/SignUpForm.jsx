@@ -1,6 +1,9 @@
 import { useState } from "react";
 
 import { FormInput } from "../form-input/FormInput";
+import { Button } from "../button.jsx/Button";
+
+import "./SignUpForm.styles.scss";
 
 import {
 	createUserDocumentFromAuth,
@@ -56,8 +59,9 @@ export const SignUpForm = () => {
 	};
 
 	return (
-		<div>
-			<h1>Sign up with your email and password</h1>
+		<div className="sign-up-container">
+			<h2>Don't have an account?</h2>
+			<span>Sign up with your email and password</span>
 			<form onSubmit={handleSubmit}>
 				<FormInput
 					label="Display Name"
@@ -66,14 +70,6 @@ export const SignUpForm = () => {
 					onChange={handleChange}
 					name="displayName"
 					value={displayName}
-					// another way to pass this data to FormInput
-					// inputOptions={{
-					// 	type: "text",
-					// 	required: true,
-					// 	onChange: handleChange,
-					// 	name: "displayName",
-					// 	value: displayName,
-					// }}
 				/>
 
 				<FormInput
@@ -102,8 +98,23 @@ export const SignUpForm = () => {
 					name="confirmPassword"
 					value={confirmPassword}
 				/>
-				<button type="submit">Sign Up</button>
+				<Button type="submit">Sig Up</Button>
 			</form>
 		</div>
 	);
 };
+
+// eslint-disable-next-line no-lone-blocks
+{
+	// another way to pass this data to FormInput
+	/* <FormInput
+					//label="Display Name"
+					// inputOptions={{
+					// 	type: "text",
+					// 	required: true,
+					// 	onChange: handleChange,
+					// 	name: "displayName",
+					// 	value: displayName,
+					// }}
+				/> */
+}
